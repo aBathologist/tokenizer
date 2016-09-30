@@ -96,7 +96,7 @@ tokenize(Text, Tokens) :-
 %   * a word (contiguous alpha-numeric chars): `word(W)`
 %   * a punctuation mark (determined by `char_type(C, punct)`): `punct(P)`
 %   * a control character (determined by `char_typ(C, cntrl)`): `cntrl(C)`
-%   * a space ( == ` `): `spc(S)`.
+%   * a space ( == " "): `spc(S)`.
 %
 %  Valid options are:
 %
@@ -240,7 +240,7 @@ tokens([T|Ts]) --> token(T), tokens(Ts).
 %% tokens(_)   --> {length(L, 200)}, L, {format(L)}, halt, !. % For debugging.
 
 token(word(W))     --> word(W), call(eos), !.
-token(word(W)),` ` --> word(W), ` `.
+token(word(W))," " --> word(W), " ".
 token(word(W)), C  --> word(W), (punct(C) ; cntrl(C) ; nasciis(C)).
 token(spc(S))      --> spc(S).
 token(punct(P))    --> punct(P).
@@ -248,7 +248,7 @@ token(cntrl(C))    --> cntrl(C).
 token(other(O))    --> nasciis(O).
 
 
-spc(` `) --> ` `.
+spc(" ") --> " ".
 
 sep --> ' '.
 sep --> call(eos), !.
