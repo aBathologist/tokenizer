@@ -8,6 +8,11 @@ reports, etc.
 Please review and accept our [code of conduct](CODE_OF_CONDUCT.md) prior to
 engaging in the project.
 
+## Overall direction and aims
+
+Consult the `[design_notes.md](design_notes.md)` to see the latest codified
+design philosophy and principles.
+
 ## Setting up Development
 
 1. Install swi-prolog's [swipl](http://www.swi-prolog.org/download/stable).
