@@ -17,3 +17,4 @@ install:
 
 test:
 	@$(SWIPL) -s test/test.pl -g 'run_tests,halt(0)' -t 'halt(1)'
+	
