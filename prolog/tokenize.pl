@@ -24,7 +24,7 @@ It also provides a simple predicate for reading lists of tokens back into
 text.
 
 */
-:- use_module(library(dcg/basics)).
+:- use_module(library(dcg/basics), [eos//0, number//1]).
 
 % Ensure we interpret backs as enclosing code lists in this module.
 :- set_prolog_flag(back_quotes, codes).
