@@ -56,12 +56,15 @@ tokenize(Text, Tokens) :-
 %  Valid options are:
 %
 %   * cased(+bool)  : Determines whether tokens perserve cases of the source text.
-%   * spaces(+bool) : Determines whether spaces are represted as tokens or discarded.
-%   * cntrl(+bool)  : Determines whether control characters are represented as tokens or discarded.
-%   * punct(+bool)  : Determines whether punctuation characters are represented as tokens or discarded.
+%   * spaces(+bool) : Determines whether spaces are represted as tokens
+%     or discarded.
+%   * cntrl(+bool)  : Determines whether control characters are represented
+%     as tokens or discarded.
+%   * punct(+bool)  : Determines whether punctuation characters are represented
+%     as tokens or discarded.
 %   * to(+one_of([strings,atoms,chars,codes])) : Determines the
-%   representation format used for the tokens. * pack(+bool) :
-%   Determines whether tokens are packed or repeated.
+%      representation format used for the tokens.
+%   * pack(+bool) :   Determines whether tokens are packed or repeated.
 
 % TODO is it possible to achieve the proper semidet  without the cut?
 % Annie sez some parses are ambiguous, not even sure the cut should be
@@ -256,8 +259,7 @@ tokens([T|Ts]) --> token(T), tokens(Ts).
 % NOTE for debugging
 % tokens(_)   --> {length(L, 200)}, L, {format(L)}, halt, !.
 
-token(number(N))   -->
-    number(N), !.
+token(number(N))   --> number(N), !.
 token(word(W))     --> word(W), eos, !.
 token(word(W)),` ` --> word(W), ` `.
 token(word(W)), C  --> word(W), (punct(C) ; cntrl(C) ; nasciis(C)).
@@ -316,5 +318,3 @@ inverse(P, A, B) :-
 pad(T_Args, X, T_X_Args) :-
     T_Args   =.. [T|Args],
     T_X_Args =.. [T, X| Args].
-
-
