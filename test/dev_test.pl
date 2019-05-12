@@ -21,6 +21,9 @@
 :- use_module(tokenize(tokenize)).
 
 % TESTS START HERE
+%
+%
+:- begin_tests(tokenize).
 
 test('Hello, Tokenize!',
      [true(Actual == Expected)]
@@ -36,10 +39,31 @@ test('Goodbye, Tokenize!',
     string_codes(Actual, Codes),
     Expected = "Goodbye, Tokenize!".
 
-test('7.0',
+test('tokenize 7.0',
      [true(Actual == Expected)]
     ) :-
     tokenize("7.0", Actual),
     Expected = [number(7.0)].
+
+test('untokenize 6.3',
+     [true(Actual == Expected)]
+    ) :-
+    untokenize([number(6.3)], Actual),
+    Expected = `6.3`.
+
+
+test('tokenize number in other stuff',
+     [true(Actual == Expected)]
+    ) :-
+    tokenize("hi 7.0 x", Actual),
+    Expected = [word(hi), spc(' '), number(7.0), spc(' '), word(x)].
+
+test('untokenize 6.3 in other stuff',
+     [true(Actual == Expected)]
+    ) :-
+    untokenize([word(hi), number(6.3)], Actual),
+    Expected = `hi6.3`.
+
+:- end_tests(tokenize).
 
 
