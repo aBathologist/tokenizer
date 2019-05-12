@@ -33,7 +33,13 @@ this result through a subsequent lexing pass.
 
 ## Design Rules
 
-* We don't parse
-* Every token generated is callable (an atom or compound)
-* Every token returned in a sequence has the same arity (but not all kinds of tokenization need to return tokens represented with the same arity)
+* We don't parse.
+* Every token generated is callable (i.e., an atom or compound).
+  * Example of an possible compound token: `spc(' ')`.
+  * Example of a possible atom token: `escape`.
+  tokenization need to return tokens represented with the same arity)
 * Users should be able to determine the kind of token by unification.
+* Users should be able to clearly see and specify the precedence for tokenizaton
+  * E.g., given `"-12.3"`, `numbers, punctuation` should yield `[pnct('-'),
+    number(12), pnct('.'), number(3)]` while `punctuation, numbers` should yield
+    `[number(-12.3)]`.
