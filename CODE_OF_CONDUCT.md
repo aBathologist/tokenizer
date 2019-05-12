@@ -55,11 +55,16 @@ a project may be further defined and clarified by project maintainers.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting shon.feder@gmail.com. All complaints will be reviewed and
-investigated and will result in a response that is deemed necessary and
-appropriate to the circumstances. The project team is obligated to maintain
-confidentiality with regard to the reporter of an incident. Further details of
-specific enforcement policies may be posted separately.
+reported by contacting Shon Feder at shon.feder@gmail.com. Should you need
+another contact to report an issue, you can contact Anne Ogborn
+atanne@swi-prolog.org (Shon will not be informed of or included on these
+communications unless requested.)
+
+All complaints will be reviewed and investigated and will result in a response
+that is deemed necessary and appropriate to the circumstances. The project team
+is obligated to maintain confidentiality with regard to the reporter of an
+incident. Further details of specific enforcement policies may be posted
+separately.
 
 Project maintainers who do not follow or enforce the Code of Conduct in good
 faith may face temporary or permanent repercussions as determined by other
