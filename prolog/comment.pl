@@ -63,7 +63,7 @@ line_comment_token(S,Text) -->
     {tr(S,SS)},
     comment_body_token(SS,eol,Text).
 
-comment_body_rec_start(_,_,_).
+comment_body_rec_start(_,_,[]).
 
 comment_body_token_rec(_,E,Cont,Text) -->
     call(E,HE),!,
@@ -107,9 +107,8 @@ comment_body_rec(_,_) --> [].
 
 comment_rec(S,E) -->
     {
-        copy_term([S,E],[S2,E2]),
-        tr(S2,SS),
-        tr(E2,EE)
+        tr(S,SS),
+        tr(E,EE)
     },
     call(SS),
     comment_body_rec(SS,EE).
