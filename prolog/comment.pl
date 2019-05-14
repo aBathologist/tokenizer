@@ -17,7 +17,7 @@ tr(S,SS) :-
             atom_codes(S,C),
             SS=id(C)
         );
-    copy_term(S,SS).
+    SS=S.
 
 eol     --> {atom_codes('\n',E)},id(E).
 eol(HS) --> {atom_codes('\n',E)},id(E,HS).
@@ -28,8 +28,9 @@ comment_body(_) --> [].
                            
 comment(S,E) -->
     {
-        tr(S,SS),
-        tr(E,EE)
+        copy_term([S,E],[S2,E2]),
+        tr(S2,SS),
+        tr(E2,EE)
     },
     call(SS),
     comment_body(EE).
@@ -50,8 +51,9 @@ comment_body_token(_,[]) --> [].
                            
 comment_token(S,E,Text) -->
     {
-        tr(S,SS),
-        tr(E,EE)
+        copy_term([S,E],[S2,E2]),
+        tr(S2,SS),
+        tr(E2,EE)
     },
     call(SS,HS),
     {append(HS,T,Text)},
@@ -81,8 +83,9 @@ comment_body_token_rec(_,_,_,_,_,[]) --> dcgtrue.
 
 comment_token_rec(S,E,Text) -->
     {
-        tr(S,SS),
-        tr(E,EE)
+        copy_term([S,E],[S2,E2]),
+        tr(S2,SS),
+        tr(E2,EE)
     },
     call(SS,HS),
     {append(HS,T,Text)},
@@ -104,8 +107,9 @@ comment_body_rec(_,_) --> [].
 
 comment_rec(S,E) -->
     {
-        tr(S,SS),
-        tr(E,EE)
+        copy_term([S,E],[S2,E2]),
+        tr(S2,SS),
+        tr(E2,EE)
     },
     call(SS),
     comment_body_rec(SS,EE).
