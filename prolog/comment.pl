@@ -8,10 +8,8 @@ module(tokenize(comment)
 
 dcgtrue(U,U).
 
-id([X|L]) --> [X],id(L).
-id([]) --> dcgtrue.
-id([X|L],[X|LL]) --> [X],id(L,LL).
-id([],[]) --> dcgtrue.
+id(X) --> X.
+id(X,X) --> X.
 
 tr(S,SS) :-
     atom(S) ->
@@ -19,7 +17,7 @@ tr(S,SS) :-
             atom_codes(S,C),
             SS=id(C)
         );
-    SS=S.
+    copy_term(S,SS).
 
 eol     --> {atom_codes('\n',E)},id(E).
 eol(HS) --> {atom_codes('\n',E)},id(E,HS).
@@ -63,21 +61,17 @@ line_comment_token(S,Text) -->
     {tr(S,SS)},
     comment_body_token(SS,eol,Text).
 
-comment_body_rec_cont(S,E,Cont,HE,Text) -->
-    {append(HE,T,Text)},
-    comment_body_token_rec(S,E,Cont,T).
-
-comment_body_rec_start(HE,Text) -->
-    {append(HE,[],Text)}.
+comment_body_rec_start(_,_,_).
 
 comment_body_token_rec(_,E,Cont,Text) -->
-    call(E,HE),
-    call(Cont,HE,Text).
+    call(E,HE),!,
+    {append(HE,T,Text)},
+    call(Cont,T).
 
 comment_body_token_rec(S,E,Cont,Text) -->
-    call(S,HS),
+    call(S,HS),!,
     {append(HS,T,Text)},
-    comment_body_token_rec(S,E,comment_body_rec_cont(S,E,Cont),T).
+    comment_body_token_rec(S,E,comment_body_token_rec(S,E,Cont),T).
 
 comment_body_token_rec(S,E,Cont,[X|L]) -->
     [X],
@@ -95,10 +89,10 @@ comment_token_rec(S,E,Text) -->
     comment_body_token_rec(SS,EE,comment_body_rec_start,T).
 
 comment_body_rec(_,E) -->
-    call(E).
+    call(E),!.
 
 comment_body_rec(S,E) -->
-    call(S),
+    call(S),!,
     comment_body_rec(S,E),
     comment_body_rec(S,E).
 
@@ -106,7 +100,7 @@ comment_body_rec(S,E) -->
     [_],
     comment_body_rec(S,E).
 
-comment_body_rec(_,_).
+comment_body_rec(_,_) --> [].
 
 comment_rec(S,E) -->
     {
@@ -143,13 +137,24 @@ tester([X|L]) :-
     nl,
     tester(L).
 
+a(A,B)   --> {atom_codes(A,AA)},AA,[B].
+a(A,B,C) --> {atom_codes(A,AA)},AA,[B],{append(AA,[B],C)}.
+b(A,B)   --> {atom_codes(B,BB)},[A],BB.
+b(A,B,C) --> {atom_codes(B,BB)},[A],BB,{append([A],BB,C)}.
+
+test_adapt(S,T) :-
+    test(comment_token_rec(a('<',U),b(U,'>'),TT),S,[]),
+    atom_codes(T,TT).
+    
 
 /*
 tester(
     [test_comment('<alla>'),
      test_comment_rec('<alla<balla>>'),
      test_comment_token('<alla>','<alla>'),
-     test_comment_token_rec('<alla<balla>>','<alla<balla>>')]).
+     test_comment_token_rec('<alla<balla>>','<alla<balla>>'),
+     test_adapt('<1 alla> <1 balla> 1>1><2 alla> <2 alla> 2>2>',
+                '<1 alla> <1 balla> 1>1><2 alla> <2 alla> 2>2>')]).
 */
 
     
