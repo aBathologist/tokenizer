@@ -41,26 +41,26 @@ end(A) :-
     NN is N - 1,
     b_setval(a,[NN,A]).
     
-a(A) --> 
+left(A) --> 
     {atom_codes(A,AA)},
     AA,
     {start(B)},
     [B].
 
-a(A,C) --> 
+left(A,C) --> 
     {atom_codes(A,AA)},
     AA,
     {start(B)},
     [B],
     {append(AA,[B],C)}.
 
-b(A) -->
+right(A) -->
     {end(B)},
     [B],
     {atom_codes(A,AA)},
     AA.
 
-b(A,C) -->
+right(A,C) -->
     {end(B)},
     [B],
     {atom_codes(A,AA)},
@@ -68,7 +68,7 @@ b(A,C) -->
     {append([B],AA,C)}.
 
 test_adapt(S,T) :-
-    mytest(comment_token_rec(a('<'),b('>'),TT),S,[]),
+    mytest(comment_token_rec(left('<'),right('>'),TT),S,[]),
     atom_codes(T,TT).
     
 

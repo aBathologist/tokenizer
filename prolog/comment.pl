@@ -5,28 +5,32 @@ module(tokenize(comment)
         comment_token_rec/3]).
 
 /** <module> Tokenizing comments
-This module defines matchers for comments used by the tokenize module.
+This module defines matchers for comments used by the tokenize module. (Note
+that we will use matcher as a name for dcg rules that match parts of the codes
+list).
 
 @author Stefan Israelsson Tampe 
 @license LGPL v2 or later
 
 Interface Note:
-Start and End matchers is a matcher (-->) that is either evaluated with no 
+Start and End matchers is a matcher (dcg rule) that is either evaluated with no 
 extra argument (--> call(StartMatcher)) and it will just match it's token or it 
 can have an extra argument producing the codes matched by the matcher e.g. used
 as --> call(StartMatcher,MatchedCodes). The matchers match start and end codes 
-of the comment, the 2matcher type will represent these matchers. For examples
+of the comment, the 2matcher type will represent these kinds of dcg rules or 
+matchers 2 is because they support two kinds of arguments to the dcg rules. 
+For examples
 see:
 
   @see tests/test_comments.pl 
 
-The matchers predicates exported nad defined are:
+The matchers predicates exported and defined are:
 
  comment(+Start:2matcher,+End:2matcher)
    - anonymously match a non recursive comment
 
  comment_rec(+Start:2matcher,+End:2matcher,2matcher)
-   - anonymously march a recursive comment
+   - anonymously match a recursive comment
 
  coment_token(+Start:2matcher,+End:2matcher,-Matched:list(codes))
    - match an unrecursive comment outputs the matched sequence used
