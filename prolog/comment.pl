@@ -1,28 +1,28 @@
-module(tokenize(comment)
-       [comment/2,
-        comment_rec/2,
-        comment_token/3,
-        comment_token_rec/3]).
+:- module(comment,
+          [comment//2,
+           comment_rec//2,
+           comment_token//3,
+           comment_token_rec//3]).
 
 /** <module> Tokenizing comments
 This module defines matchers for comments used by the tokenize module. (Note
 that we will use matcher as a name for dcg rules that match parts of the codes
 list).
 
-@author Stefan Israelsson Tampe 
+@author Stefan Israelsson Tampe
 @license LGPL v2 or later
 
 Interface Note:
-Start and End matchers is a matcher (dcg rule) that is either evaluated with no 
-extra argument (--> call(StartMatcher)) and it will just match it's token or it 
+Start and End matchers is a matcher (dcg rule) that is either evaluated with no
+extra argument (--> call(StartMatcher)) and it will just match it's token or it
 can have an extra argument producing the codes matched by the matcher e.g. used
-as --> call(StartMatcher,MatchedCodes). The matchers match start and end codes 
-of the comment, the 2matcher type will represent these kinds of dcg rules or 
-matchers 2 is because they support two kinds of arguments to the dcg rules. 
+as --> call(StartMatcher,MatchedCodes). The matchers match start and end codes
+of the comment, the 2matcher type will represent these kinds of dcg rules or
+matchers 2 is because they support two kinds of arguments to the dcg rules.
 For examples
 see:
 
-  @see tests/test_comments.pl 
+  @see tests/test_comments.pl
 
 The matchers predicates exported and defined are:
 
@@ -48,7 +48,7 @@ The matchers predicates exported and defined are:
 
 comment_body(E) --> call(E),!.
 comment_body(E) --> [_],comment_body(E).
-                           
+
 comment(S,E) -->
     call(S),
     comment_body(E).
@@ -63,7 +63,7 @@ comment_body_token(E,Text) -->
 comment_body_token(E,[X|L]) -->
     [X],
     comment_body_token(E,L).
-                           
+
 comment_token(S,E,Text) -->
     call(S,HS),
     {append(HS,T,Text)},

@@ -153,3 +153,5 @@ test('Untokenizes string things',
     Expected = `"some string"`.
 
 :- end_tests(tokenize).
+
+:- ['./test_comments.pl'].
